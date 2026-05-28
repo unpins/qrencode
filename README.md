@@ -46,7 +46,7 @@ The [Releases](https://github.com/unpins/qrencode/releases) page has standalone 
 
 ## Build notes
 
-- **Windows variant:** `mingw` (cross from Linux). No POSIX gaps — qrencode is a small pure-C codebase with PNG output via libpng.
-- **`doCheck = false`**: upstream's test-suite drags SDL2 in via `nativeCheckInputs` to visually preview the rendered QR codes. SDL2 in turn propagates `libglvnd`, which has `meta.badPlatforms = lib.platforms.isStatic` — `pkgsStatic` eval fails before reaching `libqrencode.a`. The library and CLI themselves don't need SDL2. The override lives in [`nix-lib/native-overlay/qrencode.nix`](https://github.com/unpins/nix-lib/blob/main/native-overlay/qrencode.nix) so every consumer (ffmpeg's `--enable-libqrencode`, …) sees the same fix.
-- **No embedded resources.** Output PNG is produced via libpng statically linked in; nothing is read from disk at runtime.
-- **No upstream features disabled.** Same generation capabilities on every platform.
+- **Windows:** `mingw` cross, single `.exe`, no companion DLLs.
+- **No upstream features disabled** on any platform.
+
+Platform fixes live in [`nix-lib/native-overlay/qrencode.nix`](https://github.com/unpins/nix-lib/blob/main/native-overlay/qrencode.nix).
