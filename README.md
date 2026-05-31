@@ -40,6 +40,10 @@ nix run github:unpins/qrencode -- 'hello' -o hello.png
 
 The first invocation will offer to add the [unpins.cachix.org](https://unpins.cachix.org) substituter so most pulls come pre-built.
 
+## Man pages
+
+`qrencode.1` is embedded in the binary — read with `unpin man qrencode`. The same page rides in the Windows `qrencode.exe`.
+
 ## Manual download
 
 The [Releases](https://github.com/unpins/qrencode/releases) page has standalone binaries for manual download.
