@@ -11,18 +11,18 @@ Part of the [unpins](https://unpins.org) project — native single-binary builds
 
 Generates QR codes from text input as PNG, SVG, EPS, ANSI, ASCII, or UTF-8 output.
 
-## Installation
+## Usage
 
-Install with [unpin](https://github.com/unpins/unpin):
+Run the `qrencode` program with [unpin](https://github.com/unpins/unpin):
 
 ```bash
-unpin qrencode
+unpin qrencode -o qr.png 'https://example.com'
 ```
 
-Or run without installing:
+To install it onto your PATH:
 
 ```bash
-unpin run qrencode
+unpin install qrencode
 ```
 
 ## Build locally
