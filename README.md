@@ -1,13 +1,13 @@
 # qrencode
 
-Standalone build of [qrencode](https://fukuchi.org/works/qrencode/) — Kentaro Fukuchi's QR code generator CLI.
+[qrencode](https://fukuchi.org/works/qrencode/) — Kentaro Fukuchi's QR code generator CLI. A single self-contained binary, built natively for Linux, macOS, and Windows.
 
 [![CI](https://github.com/unpins/qrencode/actions/workflows/qrencode.yml/badge.svg)](https://github.com/unpins/qrencode/actions)
 ![Linux](https://img.shields.io/badge/Linux-✓-success?logo=linux&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-✓-success?logo=apple&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-✓-success?logo=windows&logoColor=white)
 
-Part of the [unpins](https://unpins.org) project — native single-binary builds with no third-party runtime dependencies.
+Part of the [unpins](https://unpins.org) catalog; install it with [`unpin`](https://github.com/unpins/unpin): `unpin install qrencode`.
 
 Generates QR codes from text input as PNG, SVG, EPS, ANSI, ASCII, or UTF-8 output.
 
@@ -25,6 +25,10 @@ To install it onto your PATH:
 unpin install qrencode
 ```
 
+## Man pages
+
+`qrencode.1` is embedded in the binary — read with `unpin man qrencode`.
+
 ## Build locally
 
 ```bash
@@ -39,10 +43,6 @@ nix run github:unpins/qrencode -- 'hello' -o hello.png
 ```
 
 The first invocation will offer to add the [unpins.cachix.org](https://unpins.cachix.org) substituter so most pulls come pre-built.
-
-## Man pages
-
-`qrencode.1` is embedded in the binary — read with `unpin man qrencode`.
 
 ## Manual download
 
