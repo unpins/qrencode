@@ -25,6 +25,8 @@
     ulib.mkStandaloneFlake {
       inherit self;
       name = "qrencode";
+      smoke = [ "--version" ];
+      smokePattern = "^qrencode version [0-9]+\\.[0-9]+";
 
       # Build via the unpin-llvm engine + emit a bitcode multicall module.
       engine = "unpin-llvm";
