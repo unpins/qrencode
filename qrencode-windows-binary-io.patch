@@ -1,0 +1,40 @@
+--- a/qrenc.c
++++ b/qrenc.c
+@@ -26,6 +26,10 @@
+ #include <string.h>
+ #include <getopt.h>
+ #include <errno.h>
++#ifdef _WIN32
++#include <io.h>
++#include <fcntl.h>
++#endif
+ #if HAVE_PNG
+ #include <png.h>
+ #endif
+@@ -1247,6 +1251,17 @@
+ 	int length = 0;
+ 	FILE *fp;
+ 
++#ifdef _WIN32
++	/* The CRT opens the standard streams in text mode, so `-o -` turned every
++	 * LF of a PNG into CRLF (the file it wrote was not even a PNG: its 8-byte
++	 * signature came out 10 bytes long) and stdin lost every CR and stopped at
++	 * the first 0x1A. `-o FILE` has always used "wb", so binary mode here is
++	 * also what makes the two paths agree.
++	 */
++	_setmode(_fileno(stdin), _O_BINARY);
++	_setmode(_fileno(stdout), _O_BINARY);
++#endif
++
+ 	while((opt = getopt_long(argc, argv, optstring, options, &lindex)) != -1) {
+ 		switch(opt) {
+ 			case 'h':
+@@ -1407,7 +1422,7 @@
+ 		length = strlen((char *)intext);
+ 	}
+ 	if(intext == NULL) {
+-		fp = infile == NULL ? stdin : fopen(infile,"r");
++		fp = infile == NULL ? stdin : fopen(infile,"rb");
+ 		if(fp == 0) {
+ 			fprintf(stderr, "Cannot read input file %s.\n", infile);
+ 			exit(EXIT_FAILURE);

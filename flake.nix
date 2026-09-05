@@ -42,6 +42,17 @@
               configureFlagsArray+=("--disable-shared")
             '';
           });
-      windowsBuild  = pkgs: ulib.nativeFixes.qrencode (ulib.mingwStaticCross pkgs);
+      # Windows: the CRT opens the standard streams in text mode, which mangled
+      # both directions -- `-o -` wrote a PNG whose LF bytes had become CRLF
+      # (not a PNG at all), and `-r FILE` / stdin dropped every CR and stopped
+      # at the first 0x1A, so the same input file encoded to a different QR
+      # code than on Linux. Both measured on Windows 10, both fixed by the
+      # patch. (Thread safety stays off here -- upstream probes for `-lpthread`
+      # and mingw names it winpthreads -- but the only lock is a lazy-init
+      # guard inside libqrencode, and this artifact is a single-threaded CLI.)
+      windowsBuild = pkgs:
+        (ulib.nativeFixes.qrencode (ulib.mingwStaticCross pkgs)).overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [ ./qrencode-windows-binary-io.patch ];
+        });
     };
 }

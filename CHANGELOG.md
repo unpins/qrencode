@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- On Windows, writing an image to standard output (`qrencode -o - ... > qr.png`)
+  produced a file that was not a valid PNG. Output to standard output now
+  matches what `-o FILENAME` writes, byte for byte.
+- On Windows, reading input from a file (`-r`) or from a pipe altered the data
+  before encoding it: carriage returns were dropped and everything after a
+  `0x1A` byte was ignored, so the same input encoded to a different QR code
+  than on Linux and macOS. Input is now taken exactly as given, which is what
+  `-8` (8-bit mode) needs to encode arbitrary bytes.
+
+  Note for Windows users: `echo text | qrencode` now encodes the carriage
+  return that `cmd.exe` adds to the line. Use `qrencode text` to encode just
+  the text.
+
 ### Changed
 
 - The Windows binary is now built by the same compiler as the Linux and macOS

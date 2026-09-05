@@ -9,7 +9,7 @@
 
 Part of the [unpins](https://unpins.org) catalog; install it with [`unpin`](https://github.com/unpins/unpin): `unpin install qrencode`.
 
-Generates QR codes from text input as PNG, SVG, EPS, ANSI, ASCII, or UTF-8 output.
+Generates QR codes from text or binary input, as PNG, SVG, EPS, XPM, ANSI, ASCII, or UTF-8 output.
 
 ## Usage
 
@@ -50,7 +50,7 @@ The [Releases](https://github.com/unpins/qrencode/releases) page has standalone 
 
 ## Build notes
 
-- **Windows:** `mingw` cross, single `.exe`, no companion DLLs.
+- **Windows:** a single `.exe`, no companion DLLs.
 - **No upstream features disabled** on any platform.
 
 Platform fixes live in [`nix-lib/native-overlay/qrencode.nix`](https://github.com/unpins/nix-lib/blob/main/native-overlay/qrencode.nix).
