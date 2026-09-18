@@ -52,5 +52,3 @@ The [Releases](https://github.com/unpins/qrencode/releases) page has standalone 
 
 - **Windows:** a single `.exe`, no companion DLLs.
 - **No upstream features disabled** on any platform.
-
-Platform fixes live in [`nix-lib/native-overlay/qrencode.nix`](https://github.com/unpins/nix-lib/blob/main/native-overlay/qrencode.nix).
