@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [4.1.1-2] - 2026-09-26
+
 ### Fixed
 
 - On Windows, writing an image to standard output (`qrencode -o - ... > qr.png`)
