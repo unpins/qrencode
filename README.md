@@ -50,5 +50,5 @@ The [Releases](https://github.com/unpins/qrencode/releases) page has standalone 
 
 ## Build notes
 
-- **Windows:** a single `.exe`, no companion DLLs.
+- **Windows:** built with mingw-w64.
 - **No upstream features disabled** on any platform.
