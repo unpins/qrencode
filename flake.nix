@@ -8,11 +8,10 @@
 
   inputs.unpins-lib.url = "github:unpins/nix-lib";
 
-  # Single CLI upstream (`qrencode`). `pkgsStatic.qrencode` cross-builds
-  # cleanly on linux / darwin / mingw; only override is the shared
-  # `nativeFixes.qrencode` (drop `doCheck`, which otherwise drags SDL2 →
-  # libglvnd through nativeCheckInputs — libglvnd is `badPlatforms.isStatic`
-  # on pkgsStatic). See nix-lib/native-overlay/qrencode.nix.
+  # Single program upstream (`qrencode`). darwin re-adds `--disable-shared`
+  # and Windows takes the binary-stdio patch (both below). The upstream suite
+  # stays off: it only builds with `--with-tests`, which changes the
+  # libqrencode that ships (nixpkgs runs it only in `passthru.tests`).
   #
   # darwin: mkStandaloneFlake's filterEnableStaticOnDarwin strips the Nix-level
   # `--disable-shared`, so libtool builds a `libqrencode.4.dylib` and the engine
@@ -36,7 +35,7 @@
         programs = [{ name = "qrencode"; }];
       };
       build = pkgs:
-        (ulib.nativeFixes.qrencode pkgs.pkgsStatic).overrideAttrs (old:
+        pkgs.pkgsStatic.qrencode.overrideAttrs (old:
           pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
             preConfigure = (old.preConfigure or "") + ''
               configureFlagsArray+=("--disable-shared")
@@ -51,7 +50,7 @@
       # and mingw names it winpthreads -- but the only lock is a lazy-init
       # guard inside libqrencode, and this artifact is a single-threaded CLI.)
       windowsBuild = pkgs:
-        (ulib.nativeFixes.qrencode (ulib.mingwStaticCross pkgs)).overrideAttrs (old: {
+        (ulib.mingwStaticCross pkgs).qrencode.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [ ./qrencode-windows-binary-io.patch ];
         });
     };
