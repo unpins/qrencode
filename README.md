@@ -51,4 +51,9 @@ The [Releases](https://github.com/unpins/qrencode/releases) page has standalone 
 ## Build notes
 
 - **Windows:** built with mingw-w64.
-- **No upstream features disabled** on any platform.
+- **Not included:** on Windows, the library's thread-safety lock (upstream
+  looks for `-lpthread`, which mingw doesn't have); the `qrencode` program is
+  single-threaded, so it doesn't use it.
+- **Tests:** the upstream suite is not run: it only builds with `--with-tests`,
+  which changes the library that ships (nixpkgs runs it only as a separate
+  test build).
